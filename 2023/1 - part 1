@@ -1,0 +1,21 @@
+with open("input.txt") as f:
+    s = f.read()
+
+lines = s.split('\n')
+calib_values = []
+
+for line in lines:
+    for chr in line:
+        if chr.isdigit() == True:
+            calib_value = chr
+            break
+    for chr in reversed(line):
+        if chr.isdigit() == True:
+            calib_value += chr
+            break
+    calib_values.append(int(calib_value))
+    calib_value = ''
+
+the_sum = sum(calib_values)
+
+print(the_sum)
