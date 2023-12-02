@@ -1,0 +1,50 @@
+with open("input.txt") as f:
+    s = f.read()
+
+lines = s.split('\n')
+red = [0]
+green = [0]
+blue = [0]
+power = []
+
+for line in lines:
+                    
+    infos = line.split(';')
+
+    for info in infos:
+        index = info.find('red') - 3
+        # if 'red' exists
+        if index >= 0:
+            to_check = info[index : index+2]
+            # if its number is an integer
+            if to_check.isdigit() == True:
+                red.append(int(to_check))
+            elif to_check[1].isdigit() == True:
+                red.append(int(to_check[1]))
+
+        index = info.find('green') - 3
+        # if 'green' exists
+        if index >= 0:
+            to_check = info[index : index+2]
+            if to_check.isdigit() == True:
+                green.append(int(to_check))
+            elif to_check[1].isdigit() == True:
+                green.append(int(to_check[1]))
+
+        index = info.find('blue') - 3
+        # if 'blue' exists
+        if index >= 0:
+            to_check = info[index : index+2]
+            if to_check.isdigit() == True:
+                blue.append(int(to_check))
+            elif to_check[1].isdigit() == True:
+                blue.append(int(to_check[1]))
+
+    power.append(max(red) * max(green) * max(blue))
+    red = [0]
+    green = [0]
+    blue = [0]
+
+the_sum = sum(power)
+
+print(the_sum)
