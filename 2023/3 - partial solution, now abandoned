@@ -1,0 +1,25 @@
+with open('sample1.txt') as f:
+    s = f.read()
+    
+lines = s.split('\n')
+symbol_tracker = []
+print(type(symbol_tracker))
+
+for j in range(len(lines)):
+    line = lines[j]
+    for i in range(len(line)):
+        if line[i] != '.' and line[i].isdigit() == False:
+            symbol_tracker.append([j, i, line[i]])
+
+
+print(symbol_tracker)
+
+for element in symbol_tracker:
+    line_no = lines[element[0]]
+    symbol_occurence = element[1]
+    for i in range(line_no - 1, line_no + 2):
+        # we need to check 3 values
+        for j in range(symbol_occurence - 1, symbol_occurence + 2): # am assuming all lines are the same length, for now
+            while k <= len(line_no + 1):
+                if lines[i][symbol_occurence - 1].isdigit() == True:
+                    reversed(line[i]).find(
