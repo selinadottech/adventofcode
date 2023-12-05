@@ -1,0 +1,18 @@
+with open('sample1.txt') as f:
+    s = f.read()
+
+lines = s.split('\n')
+
+#omg this works. thanks, reddit
+parsed = [[line.split(':')[0].split(' ')[1], line.split(':')[1].split(';')] for line in lines]
+
+print(parsed)
+
+for card in parsed:
+    numbers = str(card[1]).split('|')
+    winning_nos = numbers[0].strip().split(' ')
+    our_nos = numbers[1].split(' ')
+    winning_nos = winning_nos[1:]
+    our_nos = our_nos[1:]
+    print(winning_nos)
+    print(our_nos)
