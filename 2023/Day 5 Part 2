@@ -1,0 +1,38 @@
+with open('input.txt') as f:
+    s = f.read()
+
+seeds = s[7 : s.find('\n\n')].split(' ')
+maps = s.split('\n\n')[1:]
+maps_dict = {}
+seed_to_loc = {}
+
+for i in range(len(maps)):
+    range_map = []
+    lines = maps[i].split(':')[1].split('\n')[1:]
+    range_map = [line.split(' ') for line in lines]
+    maps_dict[str(i) + maps[i].split(':')[0]] = range_map 
+
+for k in range(0, len(seeds), 2):
+    range_start = int(seeds[k])
+    range_length = int(seeds[k+1])
+    for l in range(range_start, range_start + range_length):
+        num = l
+        for map in sorted(maps_dict):
+            for i in range(len(maps_dict[map])):
+                dest_start = int(maps_dict[map][i][0])
+                source_start = int(maps_dict[map][i][1])
+                range_length = int(maps_dict[map][i][2])
+                if source_start <= num <= source_start + range_length:
+                    diff = dest_start - source_start
+                    new_num = num + diff
+                    break
+                else:
+                    new_num = num
+            num = new_num
+        seed_to_loc[l] = new_num
+    #print(k)
+    #print(seed_to_loc)
+    
+
+min_loc = min(seed_to_loc.values())
+print(min_loc)
