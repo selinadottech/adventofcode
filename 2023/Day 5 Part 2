@@ -1,23 +1,37 @@
-with open('input.txt') as f:
+with open('sample1.txt') as f:
     s = f.read()
 
 seeds = s[7 : s.find('\n\n')].split(' ')
 maps = s.split('\n\n')[1:]
 maps_dict = {}
-seed_to_loc = {}
+
+# Extractor
 
 for i in range(len(maps)):
     range_map = []
     lines = maps[i].split(':')[1].split('\n')[1:]
     range_map = [line.split(' ') for line in lines]
-    maps_dict[str(i) + maps[i].split(':')[0]] = range_map 
+    maps_dict[str(i) + maps[i].split(':')[0]] = range_map
+
+
+# Converter    
+
+seed_to_loc = {}
 
 for k in range(0, len(seeds), 2):
+    #seed = int(seed)
+    #num = seed
     range_start = int(seeds[k])
     range_length = int(seeds[k+1])
+    print(sorted(maps_dict.values()))
+    '''for keys, values in sorted(maps_dict):
+        print(map)
+        sorted_map = sorted(map.values()[1])
+        #sorted_map[1]
+        print(sorted_map)'''
     for l in range(range_start, range_start + range_length):
         num = l
-        for map in sorted(maps_dict):
+        for map in sorted(maps_dict.values()):
             for i in range(len(maps_dict[map])):
                 dest_start = int(maps_dict[map][i][0])
                 source_start = int(maps_dict[map][i][1])
@@ -30,8 +44,8 @@ for k in range(0, len(seeds), 2):
                     new_num = num
             num = new_num
         seed_to_loc[l] = new_num
-    #print(k)
-    #print(seed_to_loc)
+    print(k)
+    print(seed_to_loc)
     
 
 min_loc = min(seed_to_loc.values())
