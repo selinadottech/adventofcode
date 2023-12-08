@@ -1,0 +1,27 @@
+with open('input.txt') as f:
+    s = f.read()
+
+raw_instructions, network = s.split('\n\n')[0], s.split('\n\n')[1].split('\n')
+instructions = [0 if chr == 'L' else 1 for chr in raw_instructions]
+network_dict = {line[0:3] : [line[7:10], line[12:15]] for line in network}
+
+begin = 'AAA'
+end = 'ZZZ'
+
+old = begin
+steps = 0
+i = 0
+
+
+while i < len(instructions):
+    instruction = instructions[i]
+    new = network_dict[old][instruction]
+    steps += 1
+    if new == end:
+        break
+    old = new
+    i += 1
+    if i == len(instructions):
+        i = 0
+
+print(steps)
