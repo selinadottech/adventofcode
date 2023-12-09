@@ -1,0 +1,54 @@
+from collections import Counter, defaultdict
+
+with open('sample2.txt') as f:
+    s = f.read()
+
+raw_instructions, network = s.split('\n\n')[0], s.split('\n\n')[1].split('\n')
+instructions = [0 if chr == 'L' else 1 for chr in raw_instructions]
+network_dict = {line[0:3] : [line[7:10], line[12:15]] for line in network}
+
+end = 'ZZZ'
+
+paths = defaultdict()
+steps = 0
+i = 0
+A_counter = 0
+
+'''
+no_of_paths = Counter(key[2] == 'A'   for key in network_dict)
+check_paths = Counter(key[2] == 'Z'   for key in network_dict)
+
+if no_of_paths == check_paths:
+    print("we're good, continue")
+else:
+    print("Error! Error! Nodes ending in A != nodes ending in Z.")
+
+print(no_of_paths[True])
+'''
+
+for node in network_dict:
+    if node[2] == 'A':
+        A_counter += 1
+        paths[A_counter-1] = [node]
+
+print(paths)
+print(len(paths))
+
+
+while i < len(instructions):
+    instruction = instructions[i]
+    for path in paths: 
+        new = network_dict[path][-1][instruction]
+        path.append(new)
+
+    steps += 1
+    #for path in paths:
+        #if path[-1] == end
+    if list(paths.values())[-1] == end:
+        break
+    old = new
+    i += 1
+    if i == len(instructions):
+        i = 0
+
+print(steps)
